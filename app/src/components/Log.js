@@ -4,18 +4,6 @@ import Button from "@enact/sandstone/Button";
 
 import css from "./Log.module.less";
 
-const RemoveBtn = () => {
-  const remove = () => {
-    console.log("remove");
-  };
-
-  return (
-    <span>
-      <Button onClick={remove}>remove</Button>
-    </span>
-  );
-};
-
 const LogBase = kind({
   name: "LogBase",
 
@@ -27,16 +15,23 @@ const LogBase = kind({
   propTypes: {
     children: Proptypes.string,
     index: Proptypes.number,
+    remove: Proptypes.func,
   },
 
-  render: ({ children, ...rest }) => {
+  handlers: {
+    remove: () => {
+      console.log("remove");
+    },
+  },
+
+  render: ({ children, remove, ...rest }) => {
     delete rest.index;
 
     return (
       <div {...rest}>
         <div className={css.log}>
           <span>{children}</span>
-          <RemoveBtn />
+          <Button onClick={remove}>remove</Button>
         </div>
       </div>
     );
