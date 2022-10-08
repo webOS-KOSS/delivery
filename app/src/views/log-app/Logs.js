@@ -2,7 +2,7 @@ import kind from "@enact/core/kind";
 import Repeater from "@enact/ui/Repeater";
 import Proptypes from "prop-types";
 
-import Log from "../components/Log";
+import Log from "../../components/log-app/Log";
 import css from "./Logs.module.less";
 
 const Logs = kind({

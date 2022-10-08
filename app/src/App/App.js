@@ -4,8 +4,8 @@ import ThemeDecorator from "@enact/sandstone/ThemeDecorator";
 import { SlideLeftArranger } from "@enact/ui/ViewManager";
 import PropTypes from "prop-types";
 
-import MainPanel from "../views/MainPanel";
-import RegisterPanel from "../views/RegisterPanel";
+import LogPanel from "../views/log-app/LogPanel";
+import VideoPanel from "../views/video-app/VideoPanel";
 
 import AppStateDecorator from "./AppStateDecorator";
 
@@ -34,14 +34,15 @@ const Sample = kind({
         path={path}
       >
         <Route
-          component={MainPanel}
+          component={LogPanel}
           onClick={onSecondPanel}
           next="second"
           path="first"
           title="대충 여기가 메인"
         >
           <Route
-            component={RegisterPanel}
+            component={VideoPanel}
+            // onClick={onFirstPanel}
             next="first"
             path="second"
             title="대충 여기가 등록할 곳"
