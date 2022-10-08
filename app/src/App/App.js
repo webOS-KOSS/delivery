@@ -38,14 +38,12 @@ const Sample = kind({
           onClick={onSecondPanel}
           next="second"
           path="first"
-          title="대충 여기가 메인"
         >
           <Route
             component={VideoPanel}
-            // onClick={onFirstPanel}
+            onClick={onFirstPanel}
             next="first"
             path="second"
-            title="대충 여기가 등록할 곳"
           />
         </Route>
       </RoutablePanels>

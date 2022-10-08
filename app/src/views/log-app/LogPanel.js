@@ -11,7 +11,7 @@ const LogPanel = ({ onClick }) => {
   const bridge = new LS2Request();
 
   async function start() {
-    let ret = await init();
+    await init();
     loop();
   }
 
@@ -44,11 +44,11 @@ const LogPanel = ({ onClick }) => {
     let lst = [];
     const results = res.results;
     for (let i in results) {
-      let text = `${String(results[i].time)} | `;
+      let text = `${String(results[i].time).replace(".mp4", "")} | `;
       if (results[i].status === "arrived") {
         text += "도착";
       }
-      if (results[i].status == "recieved") {
+      if (results[i].status == "received") {
         text += "수령";
       }
       lst.unshift(text);

@@ -22,6 +22,7 @@ const Sample = kind({
     video: PropTypes.number,
     onNavigate_: PropTypes.func,
     onSelectVid: PropTypes.func,
+    onClick: PropTypes.func,
     backBtn: PropTypes.func,
   },
 
@@ -52,10 +53,10 @@ const Sample = kind({
     },
   },
 
-  render: ({ index, video, onNavigate_, onSelectVid, ...rest }) => (
+  render: ({ index, video, onNavigate_, onSelectVid, onClick, ...rest }) => (
     <div {...rest}>
       <Panels index={index} onBack={onNavigate_}>
-        <VideoList onSelectVid={onSelectVid}></VideoList>
+        <VideoList onSelectVid={onSelectVid} onClick={onClick}></VideoList>
         <Video index={video} backBtn={onNavigate_} />
       </Panels>
     </div>

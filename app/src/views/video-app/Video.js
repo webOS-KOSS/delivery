@@ -15,7 +15,7 @@ const Player = ({ index, backBtn }) => {
   const getVids = () => {
     let params = {};
     let lsRequest = {
-      service: "luna://com.vid.app.service",
+      service: "luna://com.delivery.app.service",
       method: "getVids",
       parameter: params,
       onSuccess: (msg) => {
@@ -36,7 +36,7 @@ const Player = ({ index, backBtn }) => {
   return (
     <VideoPlayerBase title={vids[vid_index]} onBack={backBtn}>
       <source
-        src={"http://192.168.1.9:3000/package/" + vids[vid_index]}
+        src={"http://192.168.54.69:3000/package/" + vids[vid_index] + ".mp4"}
         type="video/mp4"
       />
     </VideoPlayerBase>

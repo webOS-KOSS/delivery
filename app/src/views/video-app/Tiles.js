@@ -20,7 +20,7 @@ const Tiles = kind({
 
   render: ({ children, onSelectVid, ...rest }) => (
     <div {...rest}>
-      <div className={css.list}>
+      <div className={css.tiles}>
         <Repeater
           childComponent={Tile}
           indexProp="index"

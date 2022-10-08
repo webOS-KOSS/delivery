@@ -103,31 +103,30 @@ service.register("loop", (msg) => {
 
   mqtt.init(mosquitto);
   client = mqtt.connect(ip);
-  mqtt.subscribe(["delivery/arrived"]);
+  mqtt.subscribe(["delivery/arrived", "delivery/received"]);
   luna.toast("서비스 시작!");
   luna.tts("서비스 시작!");
 
   client.on("message", (topic, message, packet) => {
     console.log("[message] : " + message);
     console.log("[topic] : " + topic);
-    if (topic == "delivery/arrived") {
+    if (topic == "delivery/arrive") {
       // ESP8266으로부터 차량이 도착한 정보를 받으면 사진을 찍어 tesseract에 넘긴다.
       luna.tts("택배가 도착했습니다.");
       luna.toast("택배가 도착했습니다.");
     }
-    if (topic == "delivery/recieved") {
+    if (topic == "delivery/received") {
       luna.tts("택배가 현관에서 사라졌습니다.");
       luna.toast("택배를 수령하셨습니까?");
     }
-    let messageParse = String(message);
-    let jsonMsg = JSON.parse(messageParse);
+    let jsonMsg = JSON.parse(String(message));
     console.log(jsonMsg);
     put(jsonMsg, msg);
-    // if (topic == "car/analyze") { // tesseract로부터 데이터를 받아온 후 DB8에 put --> 그리고 데이터 파싱하는 과정에 분석하여 결과가 등록된 차량이었다면 tts로 알려주면 좋을듯
-    //   let messageParse = String(message);
-    //   let jsonMsg = JSON.parse(messageParse);
-    // }
-    msg.respond({ returnValue: true, time: message, status: "arrived" });
+    msg.respond({
+      returnValue: true,
+      time: jsonMsg.time,
+      status: jsonMsg.status,
+    });
   });
 
   //------------------------- heartbeat 구독 -------------------------
@@ -207,7 +206,7 @@ heartbeat.on("cancel", function (message) {
 
 service.register("getVids", (msg) => {
   const options = {
-    uri: "http://192.168.1.9:3000/vidlist",
+    uri: "http://192.168.54.69:3000/vidlist",
     headers: { app: "package" },
   };
 
