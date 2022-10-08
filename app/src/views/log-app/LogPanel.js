@@ -77,7 +77,6 @@ const LogPanel = ({ onClick }) => {
   return (
     <Panel>
       <Header title="log app" />
-      <Button onClick={init}>init</Button>
       <Button onClick={onClick}>video</Button>
       <Scroller>
         <Logs>{logs}</Logs>
