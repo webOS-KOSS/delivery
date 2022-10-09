@@ -97,7 +97,7 @@ const find = (msg) => {
 
 // const del = (vid) => {
 //   const options = {
-//     uri: "http://192.168.54.69:3000/package/" + vid,
+//     uri: "http://3.34.50.139:80000/package/" + vid,
 //   };
 //   request.delete(options, (err, res, body) => {
 //     if (!err && res.statusCode == 200) {
@@ -112,7 +112,7 @@ const find = (msg) => {
 
 service.register("delVid", (msg) => {
   const options = {
-    uri: `http://192.168.150.69:3000/package/${jsonMsg.time}.mp4`,
+    uri: `http://3.34.50.139:8000/package/${jsonMsg.time}.mp4`,
   };
   request.delete(options, (err, res, body) => {
     if (!err && res.statusCode == 200) {
@@ -127,7 +127,7 @@ service.register("delVid", (msg) => {
 
 service.register("getVids", (msg) => {
   const options = {
-    uri: "http://192.168.150.69:3000/vidlist",
+    uri: "http://3.34.50.139:8000/vidlist",
     headers: { app: "package" },
   };
 
