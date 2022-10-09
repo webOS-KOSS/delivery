@@ -2,6 +2,7 @@ var ls2 = undefined;
 var handle = undefined;
 var key = undefined;
 var check = undefined;
+const exec = require("child_process").exec;
 
 function init(service) {
   ls2 = service;
@@ -160,9 +161,16 @@ function cameraCapture(path) {
   });
 }
 
+function alert(params){
+  var string_ = `luna-send -n 1 -f -a com.webos.surfacemanager luna://com.webos.notification/createAlert '${params}'`;
+  console.log(string_);
+  var pro = exec(string_);
+}
+
 exports.init = init;
 exports.toast = toast;
 exports.tts = tts;
 exports.launchApp = launchApp;
 exports.cameraReady = cameraReady;
 exports.cameraCapture = cameraCapture;
+exports.alert = alert;
