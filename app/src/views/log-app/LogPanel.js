@@ -44,7 +44,7 @@ const LogPanel = ({ onClick }) => {
     let lst = [];
     const results = res.results;
     for (let i in results) {
-      let text = `${String(results[i].time).replace(".mp4", "")} | `;
+      let text = `${String(results[i].time)} | `;
       if (results[i].status === "arrived") {
         text += "도착";
       }

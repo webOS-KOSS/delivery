@@ -112,7 +112,7 @@ const find = (msg) => {
 
 service.register("delVid", (msg) => {
   const options = {
-    uri: `\"http://192.168.54.69:3000/package/${jsonMsg.time}.mp4\"`
+    uri: `http://192.168.1.9:3000/package/${jsonMsg.time}.mp4`,
   };
   request.delete(options, (err, res, body) => {
     if (!err && res.statusCode == 200) {
@@ -127,7 +127,7 @@ service.register("delVid", (msg) => {
 
 service.register("getVids", (msg) => {
   const options = {
-    uri: "http://192.168.54.69:3000/vidlist",
+    uri: "http://192.168.1.9:3000/vidlist",
     headers: { app: "package" },
   };
 
