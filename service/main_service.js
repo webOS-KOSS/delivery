@@ -112,7 +112,7 @@ const find = (msg) => {
 
 service.register("delVid", (msg) => {
   const options = {
-    uri: `http://192.168.1.9:3000/package/${jsonMsg.time}.mp4`,
+    uri: `http://192.168.150.69:3000/package/${jsonMsg.time}.mp4`,
   };
   request.delete(options, (err, res, body) => {
     if (!err && res.statusCode == 200) {
@@ -127,7 +127,7 @@ service.register("delVid", (msg) => {
 
 service.register("getVids", (msg) => {
   const options = {
-    uri: "http://192.168.1.9:3000/vidlist",
+    uri: "http://192.168.150.69:3000/vidlist",
     headers: { app: "package" },
   };
 
@@ -157,25 +157,26 @@ service.register("loop", (msg) => {
   client.on("message", (topic, message, packet) => {
     console.log("[message] : " + message);
     console.log("[topic] : " + topic);
-    if (topic == "delivery/arrive") {
-      // ESP8266으로부터 차량이 도착한 정보를 받으면 사진을 찍어 tesseract에 넘긴다.
-      luna.tts("택배가 도착했습니다.");
-      luna.toast("택배가 도착했습니다.");
-    }
-    if (topic == "delivery/received") {
-      luna.tts("택배가 현관에서 사라졌습니다.");
-      luna.toast("택배를 수령하셨습니까?");
-    }
     jsonMsg = JSON.parse(String(message));
     console.log(jsonMsg);
     put(jsonMsg, msg);
-    let params = `{ \"message\":\" ${jsonMsg.time}",\"buttons\":[{\"label\":\"Yes\",\"onclick\":\"luna://com.delivery.app.service/delVid\"}, {"label":"No"}]}`;
-    luna.alert(params);
-    msg.respond({
-      returnValue: true,
-      time: jsonMsg.time,
-      status: jsonMsg.status,
-    });
+
+    if (topic == "delivery/arrive") {
+      // ESP8266으로부터 차량이 도착한 정보를 받으면 사진을 찍어 tesseract에 넘긴다.
+      luna.tts("배달 물품이 현관에 도착했습니다.");
+      luna.toast("배달 물품이 현관에 도착했습니다.");
+    }
+    if (topic == "delivery/received") {
+      luna.tts("배달 물품이 현관에서 사라졌습니다.");
+      luna.toast("배달 물품이 현관에서 사라졌습니다.");
+      let params = `{ \"message\":\" ${jsonMsg.time}에 배달 물품을 수령하셨습니까?",\"buttons\":[{\"label\":\"Yes\",\"onclick\":\"luna://com.delivery.app.service/delVid\"}, {"label":"No"}]}`;
+      luna.alert(params);
+      msg.respond({
+        returnValue: true,
+        time: jsonMsg.time,
+        status: jsonMsg.status,
+      });
+    }
   });
 
   //------------------------- heartbeat 구독 -------------------------
