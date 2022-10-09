@@ -11,6 +11,7 @@ const kindID = "com.log.db:2";
 
 const ip = "3.34.50.139";
 // mosquitto_pub -h 3.34.50.139 -t "car" -m "{\"time\":\"123\", \"carNumber\":\"123\", \"status\":\"registered\"}"
+var jsonMsg = undefined;
 
 const putKind = (msg) => {
   service.call(
@@ -94,6 +95,52 @@ const find = (msg) => {
   );
 };
 
+// const del = (vid) => {
+//   const options = {
+//     uri: "http://192.168.54.69:3000/package/" + vid,
+//   };
+//   request.delete(options, (err, res, body) => {
+//     if (!err && res.statusCode == 200) {
+//       console.log(body);
+//       console.log(res.statusCode);
+//     } else {
+//       console.log(body);
+//       console.log(res.statusCode);
+//     }
+//   });
+// };
+
+service.register("delVid", (msg) => {
+  const options = {
+    uri: `\"http://192.168.54.69:3000/package/${jsonMsg.time}.mp4\"`
+  };
+  request.delete(options, (err, res, body) => {
+    if (!err && res.statusCode == 200) {
+      console.log(body);
+      console.log(res.statusCode);
+    } else {
+      console.log(body);
+      console.log(res.statusCode);
+    }
+  });
+});
+
+service.register("getVids", (msg) => {
+  const options = {
+    uri: "http://192.168.54.69:3000/vidlist",
+    headers: { app: "package" },
+  };
+
+  request.get(options, (err, res, body) => {
+    if (err) {
+      console.log(err);
+    }
+    let vidlist = JSON.parse(body).vidlist;
+    console.log(logHeader + vidlist);
+    msg.respond({ returnValue: true, vidlist: vidlist });
+  });
+});
+
 service.register("init", (msg) => {
   putKind(msg);
 });
@@ -119,9 +166,11 @@ service.register("loop", (msg) => {
       luna.tts("택배가 현관에서 사라졌습니다.");
       luna.toast("택배를 수령하셨습니까?");
     }
-    let jsonMsg = JSON.parse(String(message));
+    jsonMsg = JSON.parse(String(message));
     console.log(jsonMsg);
     put(jsonMsg, msg);
+    let params = `{ \"message\":\" ${jsonMsg.time}",\"buttons\":[{\"label\":\"Yes\",\"onclick\":\"luna://com.delivery.app.service/delVid\"}, {"label":"No"}]}`;
+    luna.alert(params);
     msg.respond({
       returnValue: true,
       time: jsonMsg.time,
@@ -202,20 +251,4 @@ heartbeat.on("cancel", function (message) {
     clearInterval(heartbeatinterval);
     heartbeatinterval = undefined;
   }
-});
-
-service.register("getVids", (msg) => {
-  const options = {
-    uri: "http://192.168.54.69:3000/vidlist",
-    headers: { app: "package" },
-  };
-
-  request.get(options, (err, res, body) => {
-    if (err) {
-      console.log(err);
-    }
-    let vidlist = JSON.parse(body).vidlist;
-    console.log(logHeader + vidlist);
-    msg.respond({ returnValue: true, vidlist: vidlist });
-  });
 });
