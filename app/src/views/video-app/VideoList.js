@@ -4,6 +4,7 @@ import Button from "@enact/sandstone/Button";
 import Proptype from "prop-types";
 import LS2Request from "@enact/webos/LS2Request";
 import { useEffect, useState } from "react";
+import css from "./VideoList.module.less";
 
 import Tiles from "./Tiles";
 
@@ -33,9 +34,11 @@ const VideoList = ({ onSelectVid, onClick, ...rest }) => {
   }, []);
 
   return (
-    <Panel {...rest}>
-      <Header title="Videos" />
-      <Button onClick={onClick}>log</Button>
+    <Panel className={css.gnd} {...rest}>
+      <Header className={css.gnd} title="영상 조회" />
+      <Button className={css.btn} onClick={onClick}>
+        배달 기록 조회
+      </Button>
       <Scroller>
         <Tiles onSelectVid={onSelectVid}>{tiles}</Tiles>
       </Scroller>

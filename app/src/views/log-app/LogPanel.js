@@ -5,6 +5,7 @@ import Logs from "./Logs";
 import LS2Request from "@enact/webos/LS2Request";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import css from "./LogPanel.module.less";
 
 const LogPanel = ({ onClick }) => {
   const [logs, setLogs] = useState(["도착/수령 시간 | 도착/수령"]);
@@ -75,9 +76,11 @@ const LogPanel = ({ onClick }) => {
   };
 
   return (
-    <Panel>
-      <Header title="delivery log" />
-      <Button onClick={onClick}>video</Button>
+    <Panel className={css.gnd}>
+      <Header className={css.gnd} title="배달 기록 조회" />
+      <Button cssName={css.btn} onClick={onClick}>
+        영상 조회
+      </Button>
       <Scroller>
         <Logs>{logs}</Logs>
       </Scroller>
