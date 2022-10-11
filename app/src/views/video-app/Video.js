@@ -37,6 +37,7 @@ const Player = ({ index, backBtn }) => {
     <VideoPlayerBase title={vids[vid_index]} onBack={backBtn}>
       <source
         src={"http://3.34.50.139:8000/package/" + vids[vid_index] + ".mp4"}
+        // src={"http://3.34.50.139:8000/package/koss.mp4"}
         type="video/mp4"
       />
     </VideoPlayerBase>
