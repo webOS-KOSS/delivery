@@ -151,8 +151,6 @@ service.register("loop", (msg) => {
   mqtt.init(mosquitto);
   client = mqtt.connect(ip);
   mqtt.subscribe(["delivery/arrived", "delivery/received"]);
-  luna.toast("서비스 시작!");
-  luna.tts("서비스 시작!");
 
   client.on("message", (topic, message, packet) => {
     console.log("[message] : " + message);
@@ -161,7 +159,7 @@ service.register("loop", (msg) => {
     console.log(jsonMsg);
     put(jsonMsg, msg);
 
-    if (topic == "delivery/arrive") {
+    if (topic == "delivery/arrived") {
       // ESP8266으로부터 차량이 도착한 정보를 받으면 사진을 찍어 tesseract에 넘긴다.
       luna.tts("배달 물품이 현관에 도착했습니다.");
       luna.toast("배달 물품이 현관에 도착했습니다.");
